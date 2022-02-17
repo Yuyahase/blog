@@ -1,0 +1,40 @@
+baseURL: https://hntk03.github.io/ #GitHub PagesのURL
+languageCode: ja
+title: Yu's Blog
+canonifyurls: true
+theme: "hugo-PaperMod"
+
+params:
+    homeInfoParams:
+        Title: "Hi there \U0001F44B"
+        Content: This blog is mainly a note for myself in the future.
+    socialIcons:
+        - name: "github"
+    defaultTheme: auto # to switch between dark or light according to browser theme
+    ShowReadingTime: true
+    ShowShareButtons: true
+    ShowBreadCrumbs: true
+
+menu:
+  main:
+    - identifier: Archive
+      name: Archive
+      url: /archives/
+      weight: 20
+    - identifier: Tags
+      name: Tags
+      url: /tags/
+      weight: 20
+    - identifier: Search
+      name: Search
+      url: /search/
+      weight: 20
+
+outputs:
+    home:
+        - HTML
+        - RSS
+        - JSON # is necessary
+
+
+
