@@ -1,4 +1,4 @@
-baseURL: https://hntk03.github.io/ #GitHub PagesのURL
+baseURL: http://localhost
 languageCode: ja
 title: Yu's Blog
 canonifyurls: true
