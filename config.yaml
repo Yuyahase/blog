@@ -3,7 +3,6 @@ languageCode: ja
 title: PaperMoon
 canonifyurls: true
 theme: "PaperMod"
-publishDir: "docs"
 
 params:
     homeInfoParams:
