@@ -1,8 +1,8 @@
 baseURL: http://localhost
 languageCode: ja
-title: Yu's Blog
+title: PaperMoon
 canonifyurls: true
-theme: "hugo-PaperMod"
+theme: "PaperMod"
 
 params:
     homeInfoParams:
