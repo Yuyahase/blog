@@ -1,8 +1,9 @@
-baseURL: http://localhost
+baseURL: https://yuyahase.github.io/blog/
 languageCode: ja
 title: PaperMoon
 canonifyurls: true
 theme: "PaperMod"
+publishDir: = "docs"
 
 params:
     homeInfoParams:
