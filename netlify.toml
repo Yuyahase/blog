@@ -33,3 +33,9 @@ HUGO_ENABLEGITINFO = "true"
 from = "/npmjs/*"
 to = "/npmjs/"
 status = 200
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+Access-Control-Allow-Origin = "*"
