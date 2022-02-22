@@ -13,7 +13,7 @@ ShowCodeCopyButtons: true
 
 ## crontabの書式
 
-分 時 日 月 曜日　実行ユーザ名 コマンド
+分 時 日 月 曜日 実行ユーザ名 コマンド
 
 |表記|説明|
 |-|-|

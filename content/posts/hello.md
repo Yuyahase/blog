@@ -9,6 +9,7 @@ ShowReadingTime: true
 ShowBreadCrumbs: true
 ShowPostNavLinks: true
 ShowCodeCopyButtons: true
+pygmentsCodeFences: true
 ---
 
 ## Hugoよく使うコマンド
