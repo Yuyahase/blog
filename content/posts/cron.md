@@ -1,5 +1,5 @@
 ---
-title: "cronについて"
+title: "ジョブスケジューリング"
 date: 2022-02-17T11:30:03+00:00
 tags: ["linux"] 
 author: "Me"
@@ -29,6 +29,14 @@ ShowCodeCopyButtons: true
 |-|-|
 |-l|予約中のジョブを表示(atqコマンドと同じ)|
 |-d ジョブ番号|指定した予約中のジョブを削除(atrmコマンドと同様)|
+
+```bash
+haseyuy@mac ~ % at 23:00 # 一度だけ実行するジョブの登録
+ls # 実行するコマンドを指定
+job 1 at Fri Feb 25 23:00:00 2022
+haseyuy@mac ~ % at -l　# 予約中のジョブの確認
+1	Fri Feb 25 23:00:00 2022
+```
 
 ## at, batchコマンドのユーザ制限
 1. `/etc/at.allow`ファイルがあれば、記述のあるユーザのみが利用可能
