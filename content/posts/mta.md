@@ -1,6 +1,19 @@
+---
+title: "MTAと印刷"
+date: 2022-02-25T11:30:03+00:00
+tags: ["linux"] 
+author: "Me"
+canonicalURL: "https://canonical.url/to/page"
+xdisableHLJS: true # to disable highlightjs
+ShowReadingTime: true
+ShowBreadCrumbs: true
+ShowPostNavLinks: true
+ShowCodeCopyButtons: true
+pygmentsCodeFences: true
+---
 
-
-### 代表的なMTAの特徴
+## 代表的なMTAの特徴
+MTAとはメールの転送を行うプログラム。ネットワーク経由、サーバ内部の転送依頼に基づき、指定された宛先へメールを転送する。
 
 |名称|特徴|
 |sendmail|古くから使われるMTA|
@@ -14,8 +27,16 @@
 ### mailqコマンド
 メールキューに溜まった送信待ちメールを表示する
 
+### メール転送
+メールの転送を行う方法は二つある
 
-### CUPS
+|設定ファイル|影響範囲|内容|反映方法|
+|-|-|-|-|
+|/etc/aliases|システム全体|別名と転送先を記載|newaliasesコマンドを実行|
+|~/.forward|ユーザ個別|転送先を記載|即時反映|
+
+----
+## CUPS
 従来のlpdの印刷システムと互換性を持った印刷サービス
 WEBブラウザからプリンタの設定を行うことができる
 http://localhost:631
