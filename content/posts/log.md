@@ -1,4 +1,16 @@
-
+---
+title: "システムログ"
+date: 2022-02-25T11:30:03+00:00
+tags: ["linux"] 
+author: "Me"
+canonicalURL: "https://canonical.url/to/page"
+xdisableHLJS: true # to disable highlightjs
+ShowReadingTime: true
+ShowBreadCrumbs: true
+ShowPostNavLinks: true
+ShowCodeCopyButtons: true
+pygmentsCodeFences: true
+---
 
 ### systemd-journald
 systemdの動作するシステムではsystemd-journaldデーモンを動作させて、ログの一元管理を行う。
@@ -21,16 +33,20 @@ journalctlの主なオプションは以下
 
 `/run`ディレクトリはメモリ上に作成されたファイルシステムの為、再起動するとデータが消える。
 
-### systemd-cat
+### systemd-catコマンド
 コマンドの実行結果をジャーナルファイルに書き込む
 
+### rsyslogコマンド
+rsyslogはsyslogの問題点を克服した次世代のsyslogである。
 
-### rsyslog
-ルール設定は以下の書式で行う
-`ファシリティ.プライオリティ アクション`
-`/etc/rsyslog.conf`が設定ファイル
+ルール設定は以下の書式で行う。
+```
+ファシリティ.プライオリティ アクション
+```
+`/etc/rsyslog.conf`が設定ファイルとなる。
+大量のログ発生時はディスクへの書き込みでパフォーマンスが低下するおそれがあるので、アクションの前に `-` を付けると、ログを非同期で書き込む。
 
-主なファシリティは以下
+主なファシリティは以下となる。
 
 |ファシリティ|説明|
 |-|-|
@@ -41,3 +57,5 @@ journalctlの主なオプションは以下
 |mail|メールサービス|
 |syslog|syslogデーモン|
 |user|ユーザーアプリケーション|
+### loggerコマンド
+手動でログメッセージを生成するコマンド
