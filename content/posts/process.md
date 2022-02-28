@@ -9,6 +9,40 @@ ShowPostNavLinks: true
 ShowCodeCopyButtons: true
 ---
 
+## システムでアクティブなプロセスを全て表示するコマンド
+
+```bash
+ps -ef | head #-e : 全てのプロセスを表示する, -f : 詳細情報を表示する
+UID          PID    PPID  C STIME TTY          TIME CMD
+root           1       0  0  2月14 ?      00:01:59 /usr/lib/systemd/systemd --switched-root --system --deserialize 17
+root           2       0  0  2月14 ?      00:00:01 [kthreadd]
+root           3       2  0  2月14 ?      00:00:00 [rcu_gp]
+root           4       2  0  2月14 ?      00:00:00 [rcu_par_gp]
+root           6       2  0  2月14 ?      00:00:00 [kworker/0:0H-events_highpri]
+root           8       2  0  2月14 ?      00:00:00 [mm_percpu_wq]
+root           9       2  0  2月14 ?      00:01:34 [ksoftirqd/0]
+root          10       2  0  2月14 ?      00:00:13 [rcu_sched]
+root          11       2  0  2月14 ?      00:00:00 [migration/0]
+```
+
+```bash
+ps ax | head # a:全てのプロセスを表示する, x:制御端末のないプロセスも表示する
+    PID TTY      STAT   TIME COMMAND
+      1 ?        Ss     1:59 /usr/lib/systemd/systemd --switched-root --system --deserialize 17
+      2 ?        S      0:01 [kthreadd]
+      3 ?        I<     0:00 [rcu_gp]
+      4 ?        I<     0:00 [rcu_par_gp]
+      6 ?        I<     0:00 [kworker/0:0H-events_highpri]
+      8 ?        I<     0:00 [mm_percpu_wq]
+      9 ?        S      1:34 [ksoftirqd/0]
+     10 ?        R      0:13 [rcu_sched]
+     11 ?        S      0:00 [migration/0]
+```
+
+## プロセスの優先度について
+
+ある時点でCPUが実行するプロセスは一つだが、実際にはタイムスライスと呼ばれるごく短い時間でプロセスを切り替えて、そのたびに別のプロセスをCPUに割り当てて実行している。
+
 ### niceコマンド
 
 nice値を付与するコマンド。
