@@ -1,7 +1,7 @@
 ---
 title: "Regex"
 date: 2022-02-28T22:47:41+09:00
-tags: [""] 
+tags: ["linux"] 
 author: "Me"
 ShowReadingTime: true
 ShowBreadCrumbs: true
@@ -35,19 +35,19 @@ grep '\.' file1
 ## Linux, linuxのいずれかを含む行を全て表示
 
 ```bash
-grep `[Linux|linux]` file1
+grep '[Linux|linux]' file1
 ```
 
 ## 先頭の1文字が数値以外の行をすべて表示
 
 ```bash
-grep `^[0-9]` file1
+grep '^[0-9]' file1
 ```
 
 ## 先頭が#で始まる行以外の行を全て表示
 
 ```bash
-grep `^[^#]` file1
+grep '^[^#]' file1
 ```
 
 ## pgrepコマンド
