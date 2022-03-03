@@ -92,3 +92,29 @@ source, .(ドット)はスクリプトの実行権限がなくても実行でき
 サブシェル内で実行されるので、現在のシェルには設定は反映されない。
 
 sh, bashコマンドはサブシェルを起動してシェルスクリプトを実行する。
+
+## whichコマンド
+
+指定されたコマンドの完全パスを表示する。
+
+```bash
+$ which passwd
+/usr/bin/passwd
+```
+
+## whereisコマンド
+
+指定されたコマンドの完全パスを表示する。
+
+マニュアルの場所も表示する。
+
+```bash
+$ whereis passwd
+passwd: /usr/bin/passwd /etc/passwd /usr/share/man/man5/passwd.5.gz /usr/share/man/man1/passwd.1.gz
+```
+
+## locateコマンド
+
+## whatisコマンド
+
+## lsattr
