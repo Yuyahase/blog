@@ -32,6 +32,16 @@ ShowCodeCopyButtons: true
 環境変数を設定するコマンド。
 環境変数は子プロセスとして起動したアプリケーションに引き継がれるので、アプリケーションから利用できる。
 
+```bash
+$ export
+declare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/0/bus"
+declare -x HISTCONTROL="ignoredups"
+declare -x HISTSIZE="1000"
+declare -x HOME="/root"
+declare -x HOSTNAME="localhost.localdomain"
+declare -x LANG="ja_JP.UTF-8"
+```
+
 ### envコマンド
 
 環境変数を一時的に変更したり、削除するコマンド。
@@ -86,16 +96,26 @@ bash起動時に実行される主な環境設定ファイル
 
 ## シェルスクリプトの実行方法
 
-source, .(ドット)はスクリプトの実行権限がなくても実行できる。
+`sourceコマンド`は実行権限がなくても実行でき、現在のシェルで実行する。
 
-./はシェルスクリプトに実行件をつけてコマンドのように実行する方法。
+`./`はシェルスクリプトに実行権をつけてコマンドのように実行する方法。
 サブシェル内で実行されるので、現在のシェルには設定は反映されない。
 
-sh, bashコマンドはサブシェルを起動してシェルスクリプトを実行する。
+```bash
+$ cat test.txt 
+X=123
+$ bash ./test.txt 
+$ echo $X
+
+# サブシェルで実行されたので、現在のシェル変数には何も定義されていない。
+$ source ./test.txt
+$ echo $X # 現在のシェルで実行されるので、シェル変数に定義されている。
+123
+```
 
 ## whichコマンド
 
-指定されたコマンドの完全パスを表示する。
+指定されたコマンドの絶対パスを表示する。
 
 ```bash
 $ which passwd
@@ -104,9 +124,7 @@ $ which passwd
 
 ## whereisコマンド
 
-指定されたコマンドの完全パスを表示する。
-
-マニュアルの場所も表示する。
+指定されたコマンドの絶対パス、ソース、マニュアルを表示する。
 
 ```bash
 $ whereis passwd
@@ -115,6 +133,60 @@ passwd: /usr/bin/passwd /etc/passwd /usr/share/man/man5/passwd.5.gz /usr/share/m
 
 ## locateコマンド
 
+ファイルやディレクトリを高速で検索するコマンド。
+
+データベースを更新するupdatedbコマンドを使用し、データベース情報を更新させる。
+
+```bash
+$ updatedb
+$ locate test1
+/usr/share/doc/pecl/zip/examples/test1.zip
+```
+
 ## whatisコマンド
 
-## lsattr
+コマンドのマニュアルを検索するコマンド(完全一致)
+
+```bash
+$ whatis cp
+cp: 適切なものはありませんでした。
+$ mandb # manコマンドで表示されるマニュアルindexを更新する
+/usr/share/man 配下のマニュアルページを処理しています...
+$ whatis cp
+cp (1)               - copy files and directories
+cp (1p)              - copy files
+$ man -f cp
+cp (1)               - copy files and directories
+cp (1p)              - copy files
+```
+
+`apropos`コマンドでマニュアルを部分一致で検索する。
+
+`man -k`でも同じ結果を表示する。
+
+```bash
+$ apropos cp
+rpm2cpio (8)         - RPM (RPM Package Manager)パッケージか...
+chcpu (8)            - configure CPUs
+clnttcp_create (3)   - library routines for remote procedure calls
+clock (3p)           - report CPU time used
+clock_getcpuclockid (3) - obtain ID of a process CPU-time clock
+clock_getcpuclockid (3p) - access a process CPU-time clock (ADVANCE...
+cp (1)               - copy files and directories
+```
+
+## lsattrコマンド
+
+ext2fs上にあるファイル属性を表示する。
+
+```bash
+$ lsattr test.txt 
+-------------------- test.txt
+$ chattr +i test.txt $ # 属性が設定されているファイルは、変更することができない
+$ lsattr test.txt 
+----i--------------- test.txt
+$ rm -rf test.txt 
+rm: 'test.txt' を削除できません: Operation not permitted
+$ mv test.txt testtest.txt 
+mv: 'test.txt' から 'testtest.txt' へ移動できません: Operation not permitted
+```
