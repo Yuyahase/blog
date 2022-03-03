@@ -17,8 +17,32 @@ ShowCodeCopyButtons: true
 |`^`|行の先頭|
 |`$`|行の末尾|
 |`*`|直前の文字が0回以上の繰り返しに一致|
-|`?`|直前の文字が0回もしくは1回の繰り返しに一致|
-|`+`|直前の文字が1回以上の繰り返しに一致|
+|`?`|直前の文字が0回もしくは1回の繰り返しに一致、拡張正規表現|
+|`+`|直前の文字が1回以上の繰り返しに一致、拡張正規表現|
+|`[abAB]`|a,b,A,Bのいずれかの文字|
+|`[^abAB]`|a,b,A,Bの以外のいずれかの文字|
+|`[a-dA-D]`|a,b,c,d,A,B,C,Dのいずれかの文字|
+
+```bash
+$ cat user.txt 
+user10.kbc
+user123.kbc
+userABC.kbc
+user0.kbc
+user.kbc
+$ egrep 'user[0-9][0-9].kbc'
+user10.kbc
+$ egrep 'user[0-9][0-9]?.kbc'
+user10.kbc
+user0.kbc
+$ egrep 'user[0-9][0-9]+.kbc'
+user10.kbc
+user123.kbc
+$ egrep 'user[0-9][0-9]*.kbc'
+user10.kbc
+user123.kbc
+user0.kbc
+```
 
 ## 空白行以外を表示
 
