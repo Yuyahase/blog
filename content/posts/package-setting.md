@@ -8,6 +8,41 @@ ShowBreadCrumbs: true
 ShowPostNavLinks: true
 ShowCodeCopyButtons: true
 ---
+## rpm
+
+```bash
+$ rpm -q php # 指定したパッケージがインストールされていればバージョンを表示
+php-7.4.19-1.module+el8.5.0+696+61e7c9ba.x86_64
+
+$ rpm -q vim
+パッケージ vim はインストールされていません。
+
+$ rpm -qi php
+Name        : php
+Version     : 7.4.19
+Release     : 1.module+el8.5.0+696+61e7c9ba
+Architecture: x86_64
+Install Date: 2021年12月10日 12時20分37秒
+Group       : Unspecified
+Size        : 4708893
+...
+```
+
+設定ファイルの表示には`-c`オプションを使う。
+
+```bash
+$ rpm -qc php
+/etc/httpd/conf.d/php.conf
+/etc/httpd/conf.modules.d/15-php.conf
+```
+
+ファイルを所有するパッケージに表示には`-f`オプションを使う。
+
+```bash
+$ rpm -qf /etc/httpd/conf.d/php.conf
+php-fpm-7.4.19-1.module+el8.5.0+696+61e7c9ba.x86_64
+php-7.4.19-1.module+el8.5.0+696+61e7c9ba.x86_64
+```
 
 ## yum
 
