@@ -13,13 +13,13 @@ pygmentsCodeFences: true
 ---
 
 ## netstatコマンド
- - 有効なネットワーク接続や開いているソケットの情報等を表示する
+
+- 有効なネットワーク接続や開いているソケットの情報等を表示する
 
 |State|説明|
 |-|-|
 |LISTEN|リッスン状態のポート|
 |ESTABLISHED|TCPコネクションが確立して通信している状態。SYNに対するACKを受信した状態。|
-
 
 ```bash
 $ netstat
@@ -34,14 +34,17 @@ unix  6      [ ]         DGRAM                    11526    /run/systemd/journal/
 ```
 
 ## ssコマンド
- - netstatの後継となるコマンドで、ネットワークソケットの情報を表示する
+
+netstatの後継となるコマンドで、ネットワークソケットの情報を表示するコマンド。
 
 ## ipconfigコマンド
- - オプションなしだと有効かされている全てのインターフェース情報が表示される
- - eth1インターフェースを停止するには`ifconfig eth1 down`もしくは`ifdown eth1`を使用する
+
+- オプションなしだと有効かされている全てのインターフェース情報が表示される
+- eth1インターフェースを停止するには`ifconfig eth1 down`もしくは`ifdown eth1`を使用する
 
 ## ipコマンド
- - 従来はipconfigやnetstat, routeコマンドだったが、ipコマンドへの移行が進んでいる
+
+従来はipconfigやnetstat, routeコマンドだったが、ipコマンドへの移行が進んでいる
 
 |オブジェクト|説明|
 |-|-|
@@ -51,16 +54,18 @@ unix  6      [ ]         DGRAM                    11526    /run/systemd/journal/
 |route|ルーティングテーブル|
 
 ## ncコマンド
- - TCPやUDPのエコーサーバを起動し、疎通確認ができるコマンド
+
+- TCPやUDPのエコーサーバを起動し、疎通確認ができるコマンド
 
 ```bash
-$ yum -y install epel-release
-$ yum -y install netcat
-$ nc -v
+yum -y install epel-release
+yum -y install netcat
+nc -v
 ```
 
 ## routeコマンド
- - ルーティングテーブルの表示、追加、削除を行うコマンド
+
+- ルーティングテーブルの表示、追加、削除を行うコマンド
 
 ```bash
 $ ip route show
@@ -68,31 +73,38 @@ default via 172.16.0.1 dev enp0s3 proto dhcp metric 100
 172.16.0.0/16 dev enp0s3 proto kernel scope link src 172.16.2.56 metric 100
 172.30.0.0/24 dev cni-podman1 proto kernel scope link src 172.30.0.1
 ```
-# 疎通確認コマンド
 
-## tracerouteコマンド
- - リモートホストまでの通信経路を表示する
+## 疎通確認コマンド
 
-## tracepathコマンド
- - 宛先までのPathMTU(ネットワーク上で一回で送信できるデータの最大値)が確認できる
+### tracerouteコマンド
 
-## pingコマンド
- - ネットワーク上のホストが起動しているか、IP通信ができるかを確認するコマンド
- - 指定したホストにICMPパケットを送信する
+リモートホストまでの通信経路を表示する。
+
+### tracepathコマンド
+
+宛先までのPathMTU(ネットワーク上で一回で送信できるデータの最大値)が確認できるコマンド。
+
+### pingコマンド
+
+- ネットワーク上のホストが起動しているか、IP通信ができるかを確認するコマンド
+- 指定したホストにICMPパケットを送信する
 
 |オプション|説明|
 |-|-|
 |-c 回数|パケットを送信する回数を指定|
 |-i 秒|パケットの送信間隔を秒単位で指定|
 
+## 名前解決コマンド
 
-# 名前解決コマンド
- - 名前解決とはホスト名からIPアドレスを求めること
- - DNSサーバやドメイン名の設定は`/etc/resolv.conf`ファイルで設定する
-## nslookup
-## digコマンド
- - DNSサーバに問い合わせて、指定した名前に関するDNSサーバからの応答を表示する
- - 一時的に外部のDNSサーバを使用したい場合は、`@DNSサーバ`を指定する
+- 名前解決とはホスト名からIPアドレスを求めること
+- DNSサーバやドメイン名の設定は`/etc/resolv.conf`ファイルで設定する
+
+### nslookup
+
+### digコマンド
+
+- DNSサーバに問い合わせて、指定した名前に関するDNSサーバからの応答を表示する
+- 一時的に外部のDNSサーバを使用したい場合は、`@DNSサーバ`を指定する
 
 |検索タイプ|説明|
 |-|-|
@@ -113,16 +125,13 @@ $ dig www.google.com
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 1232
 ;; QUESTION SECTION:
-;www.google.com.			IN	A
+;www.google.com.   IN A
 
 ;; ANSWER SECTION:
-www.google.com.		215	IN	A	142.250.207.4
+www.google.com.  215 IN A 142.250.207.4
 
 ;; Query time: 7 msec
 ;; SERVER: 203.141.128.33#53(203.141.128.33)
 ;; WHEN: 土  2月 19 02:15:29 JST 2022
 ;; MSG SIZE  rcvd: 59
 ```
-
-
-

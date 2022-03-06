@@ -31,6 +31,8 @@ ShowCodeCopyButtons: true
 
 `ldconfig`コマンドを使う。
 
-共有ライブラリの検索パスが記述されている`/etc/ld.so.conf`ファイルを参照し、`/etc/ld.so.cache`ファイルを更新する。
+`ldconfig`コマンドによって、共有ライブラリの検索パスが記述されている`/etc/ld.so.conf`ファイルを参照し、`/etc/ld.so.cache`ファイルを更新する。
+
+`/etc/ld.socache`ファイルはバイナリファイルであるため、`/etc/ld/so/conf`ファイルより早く検索できる。
 
 `LD_LIBRARY_PATH`は共有ライブラリのパスが保存された環境変数である。

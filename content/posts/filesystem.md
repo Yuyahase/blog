@@ -73,6 +73,16 @@ UUID=2d3bc8db-c107-4048-b1d6-bb1084fd2ad4 /boot                   xfs     defaul
 #  6. ファイルシステムのチェック
 ```
 
+主なマウントオプションは以下。
+`user`と`users`オプションの違いは、アンマウントが本人のみ可能なのか、誰でも可能なのかの違い。
+
+|オプション|説明|
+|-|-|
+|defaults|デフォルト指定(async, auto, dev, exec, nouser, rw, suid)|
+|user|一般ユーザでマウント化、本人のみアンマウント化|
+|users|一般ユーザでマウント化、誰でもアンマウント化|
+|nouser|一般ユーザによるマウントを禁止|
+
 ## `mount`コマンド
 
 ファイルシステムをマウントするコマンド。
@@ -83,3 +93,58 @@ UUID=2d3bc8db-c107-4048-b1d6-bb1084fd2ad4 /boot                   xfs     defaul
 |`-o`|マウントオプションを指定|
 |`-t`|ファイルシステムの種類を指定|
 |`--bind`|mount --bind dir1 dir2で、dir1をdir2にマウントする|
+
+## `du`コマンド
+
+ファイルやディレクトリがどれくらい圧迫しているか確認するコマンド。
+
+|オプション|説明|
+|-|-|
+|`-a`|ディレクトリ以外にファイルについても表示|
+|`-h`|わかりやすい単位を付加して表示|
+|`-c`|合計容量も表示|
+|`-s`|指定したファイルやディレクトリの合計容量のみを表示|
+|`-S`|ディレクトリの容量にサブディレクトリの容量を含めずに表示|
+
+`-s`オプションで特定のディレクトリの合計容量のみ表示
+
+```bash
+$ du -hs /usr/local/
+1.2G    /usr/local/
+```
+
+## `df`コマンド
+
+ファイルシステムのディスク容量の使用状況を表示する。
+
+`-h`オプションで単位を見やすい形で表示する。
+
+```bash
+$ df -h
+ファイルシス        サイズ  使用  残り 使用% マウント位置
+devtmpfs              4.1G     0  4.1G    0% /dev
+tmpfs                 4.1G   92K  4.1G    1% /dev/shm
+tmpfs                 4.1G  8.6M  4.1G    1% /run
+tmpfs                 4.1G     0  4.1G    0% /sys/fs/cgroup
+/dev/mapper/rl-root    42G  5.1G   37G   13% /
+/dev/sda1            1014M  266M  749M   27% /boot
+shm                    63M   16K   63M    1% /var/lib/containers/storage/overlay-containers/c1dd7b14474af00f593825267e2d53970ffd73ca3910ceca8b1d376cc13da57c/userdata/shm
+overlay                42G  5.1G   37G   13% /var/lib/containers/storage/overlay/79131ae2b42d3e42a6e041b3a365832ea276b2efbe76cd3f3e38441e7c745312/merged
+tmpfs                 828M     0  828M    0% /run/user/0
+```
+
+`-T`オプションでファイルシステムタイプを表示する。
+
+```bash
+$ df -Th
+ファイルシス        タイプ   サイズ  使用  残り 使用% マウント位置
+devtmpfs            devtmpfs   4.1G     0  4.1G    0% /dev
+tmpfs               tmpfs      4.1G   92K  4.1G    1% /dev/shm
+tmpfs               tmpfs      4.1G  8.6M  4.1G    1% /run
+tmpfs               tmpfs      4.1G     0  4.1G    0% /sys/fs/cgroup
+/dev/mapper/rl-root xfs         42G  5.1G   37G   13% /
+/dev/sda1           xfs       1014M  266M  749M   27% /boot
+shm                 tmpfs       63M   16K   63M    1% /var/lib/containers/storage/overlay-containers/c1dd7b14474af00f593825267e2d53970ffd73ca3910ceca8b1d376cc13da57c/userdata/shm
+overlay             overlay     42G  5.1G   37G   13% /var/lib/containers/storage/overlay/79131ae2b42d3e42a6e041b3a365832ea276b2efbe76cd3f3e38441e7c745312/merged
+tmpfs               tmpfs      828M     0  828M    0% /run/user/0
+```
