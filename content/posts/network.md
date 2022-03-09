@@ -270,6 +270,8 @@ www.google.com.  215 IN A 142.250.207.4
 
 NetworkManagerの制御を行うコマンドラインツール。
 
+ちなみにnmtuiは、テキストユーザインターフェース(TUI)となる。
+
 nmcliの第一引数には、操作対象となるgeneral, device, connection, networkingなどを指定する。操作対象はオブジェクトと呼ばれる。
 
 主なオブジェクトは以下。
