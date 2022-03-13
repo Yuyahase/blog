@@ -1,7 +1,7 @@
 ---
 title: "network関連のコマンド"
 date: 2022-02-17T11:30:03+00:00
-tags: ["hugo"] 
+tags: ["network","linux"] 
 author: "Me"
 canonicalURL: "https://canonical.url/to/page"
 xdisableHLJS: true # to disable highlightjs
