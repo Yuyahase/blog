@@ -69,10 +69,17 @@ setコマンドはオプションを指定せずに実行すると、シェル�
 
 bash起動時に実行される主な環境設定ファイル
 
-/etc/profile
-/.bash_profile
-/.bash_login
-/.profile
+`/etc/profile`,`~/bash_profile`,`~/.bash_login`,`/.profile`
+
+|ファイル|起動タイミング|対象範囲|
+|-|-|-|
+|`/etc/profile`|ログイン時に実行|全ユーザ|
+|`/etc/bashrc`|`~/.bashrc`から参照|全ユーザ|
+|`~/.bash_profile`|ログイン時に実行|HOMEユーザ|
+|`~/.bash_login`|ログイン時に実行(`~/.bash_profile`がない場合)|HOMEユーザ|
+|`~/.profile`|ログイン時に実行(上記二つがない場合)|HOMEユーザ|
+|`~/.bashrc`|bash起動時に実行|HOMEユーザ|
+|`~/.bash_logout`|ログアウト時に実行|HOMEユーザ|
 
 ## alias/unaliasコマンド
 
