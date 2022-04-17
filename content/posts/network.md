@@ -57,7 +57,7 @@ LISTEN 0      64         127.0.0.1:9915                  0.0.0.0:*
 LISTEN 0      128        127.0.0.1:35453                 0.0.0.0:* 
 ```
 
-## ipconfigコマンド
+## ifconfigコマンド
 
 オプションなしだと有効かされている全てのインターフェース情報が表示される。
 
@@ -110,6 +110,7 @@ ARPキャッシュの内容は、`ip neigh show`コマンドでも確認でき�
 |`-a`|続けて表示対象ホスト名を指定|
 |`-n`|逆引きを行わず、IPアドレスのまま表示|
 |`-d`|続けて削除対象ホスト名を指定|
+|`-f`|続けてファイルを指定し、その内容をキャッシュに追加|
 
 ## ipコマンド
 
@@ -149,18 +150,63 @@ ip route del default
 
 ## iwコマンド
 
-無線デバイスや無線インターフェイスの設定を行う。
-
-|オブジェクト|説明|主要コマンド|
-|-|-|-|
-|`dev インターフェイス名`|インターフェイス名を引数に取り、インターフェイスの情報表示や設定を行う|link:無線の接続状況を表示<br>scan:接続可能な無線APをスキャン<br>station dump:統計情報を確認|
+```bash
+# 利用可能なアクセスポイントをスキャン
+$ iw dev wlan0 scan
+# リンクの状態の確認
+$ iw dev wlp1s0 link
+# 現在の接続を切断
+$ iw dev wlp1s0 disconnect
+# ESSID(testid)とkey(testkey)で接続
+$ iw dev wlp1s0 connect testid key 0:testkey
+# 接続端末の送受信状況をダンプ
+$ iw dev wlp1s0 station dump
+# モニタインターフェイスを追加
+$ iw phy phy0 interface add monwlan0 type monitor
+# モニタインターフェイスを削除
+$ iw dev monwaln0 del
+```
 
 ## iwconfigコマンド
 
 無線LANインターフェースについての操作を行うコマンド。
 
-|`essid`|続けてESSIDを指定する|
-|`key`|続けてWEPキーを指定する|
+```bash
+# ESSIDにwindsorを設定
+$ iwconfig wlan0 essid "windsor"
+
+# 無線LANアクセスポイントに接続
+# 暗号キーは先頭に「s:」をつける必要がある。
+$ iwconfig wlan0 essid "Atmark2" key "s:password"
+
+# 無線LANの接続をアドホックモードに変更
+# アドホック:デバイス同士がルータ/アクセスポイントを介さず直接接続
+$ iwconfig wlan0 mode Ad-Hoc
+```
+
+## iwlistコマンド
+
+無線インターフェースの情報を取得できる。
+
+```bash
+$ iwlist wlan0 scan
+
+# 無線LANアクセスポイントの速度をチェック
+$ iwlist wlan0 rate
+wlan0     4 available bit-rates :
+   1 Mb/s
+   2 Mb/s
+   5.5 Mb/s
+   11 Mb/s
+   Current Bit Rate:72.2 Mb/s
+# アクセスポイントの認証方式を確認
+$ iwlist wlan0  auth
+wlan0     Authentication capabilities :
+    WPA
+    WPA2
+    CIPHER-TKIP
+    CIPHER-CCMP
+```
 
 ## ncコマンド
 
@@ -196,6 +242,11 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 default         _gateway        0.0.0.0         UG    100    0        0 enp0s3
 172.16.0.0      0.0.0.0         255.255.0.0     U     100    0        0 enp0s3
 172.30.0.0      0.0.0.0         255.255.255.0   U     0      0        0 cni-podman1
+# デフォルトルートの設定
+# -hostや-netは付加しない
+$ route add default gw 192.168.0.1
+# ipコマンドの場合 viw を付加する
+$ ip route add default via 192.168.0.1
 ```
 
 ```bash
@@ -328,7 +379,7 @@ full
 
 暗号化されていないパスワードなどは平文で流されるため、tcpdumpでネットワークを監視されていると、アカウント情報が盗まれる可能性がある。
 
-tcpdumpを実行すると、ネットワークデバイスはプロミスキャスモード(自分宛以外のパケットも受け取る状態)
+tcpdumpを実行すると、ネットワークデバイスはプロミスキャスモード(自分宛以外のパケットも受け取る状態)で動作する。
 
 |オプション|説明|
 |-|-|
@@ -337,6 +388,12 @@ tcpdumpを実行すると、ネットワークデバイスはプロミスキャ�
 |`-X`|16進数とASCII文字を表示する|
 |`-n`|アドレスを名前解決せずに表示する|
 |`port`|ポート番号を指定|
+|`tcp`|TCPのパケットを対象とする|
+|`udp`|UDPのパケットを対象とする|
+|`icmp`|ICMPのパケットを対象とする|
+|`arp`|ARPのパケットを対象とする|
+|`src`|指定した送信元からのパケットを対象とする|
+|`dst`|指定した送信先へのパケットを対象とする|
 
 キャプチャに使用できるネットワークインターフェイスの確認は`-D`オプションを使う。
 
@@ -353,3 +410,39 @@ $ tcpdump -D
 9.usbmon0 (Raw USB traffic, all USB buses) [none]
 10.usbmon1 (Raw USB traffic, bus number 1)
 ```
+
+## nmap
+
+詳細が不明なネットワーク構造をスキャンできる。
+
+スキャンタイプは以下がある。
+
+|スキャンタイプ|説明|
+|-|-|
+|-sT|TCPスキャン|
+|-sU|UDPスキャン|
+|-sP|Pingスキャン|
+|-p|続けて対象ポート範囲を指定|
+|-F|有名ポートを対象にした高速スキャン|
+|-O|対象ホストのOS識別を試みる|
+
+## bondingモジュール
+
+bondingとは複数のネットワークインタフェースを一つに束ねる技術。
+
+Linuxではbondingモジュールを読み込むことでbondingが設定可能となる。
+
+|bondingポリシー|説明|
+|`balance-rr`|ラウンドロビンによる送信の負荷分散|
+|`active-backup`|一つのスレーブインターフェースのみがアクティブとなり、障害発生時にのみ他のスレーブに切り替わる|
+|`balance-tlb`|ステーブインターフェースの負荷に応じた送信の負荷分散|
+|`balance-alb`|ステーブインターフェースの負荷に応じた送受信の負荷分散|
+|`802.3ad`|LACPを使用したリンクアグリゲーション|
+
+bondingではネットワークインタフェースを以下のように分類している。
+
+- マスターインタフェース:bondingで束ねられた仮想インタフェース
+
+- スレーブインタフェース:bondingを構成する個々の物理インタフェース
+
+- アクティブインタフェース:bondingの中で実際にパケットの送受信を行うインタフェース
