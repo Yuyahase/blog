@@ -37,6 +37,18 @@ Volume group "testvg" successfully created.
 
 # -sオプションを使って物理エクステントのサイズを指定できる
 $ vgcreate -s 32M testvg /dev/sdd1 /dev/sde1
+
+# ボリュームグループを指定して、論理グループを作成する
+# -L サイズ: 論理ボリュームサイズを指定する
+# -n LV名: 論理ボリューム名を指定する
+$ lvcreate -L 500M -n lv01 testvg
+
+$ mkfs.ext4 /dev/testvg/lv01
+
+# Device Mapperの働きにより、/dev/VG名/LV名は、/dev/mapper/VG名-LV名という名前にマッピングされる。
+$ mount /dev/testvg/lv01 /mnt
+
+
 ```
 
 ## LVM関連のコマンド
